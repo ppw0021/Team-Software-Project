@@ -1,18 +1,20 @@
-
 package com.mycompany.groupproject;
 
+abstract class AbstractFile {
 
-abstract class File {
-   
     private String DocumentName;
     private String Password;
 
-    public File(String documentName,String password) {
+    public AbstractFile(String documentName, String password) {
         this.DocumentName = documentName;
-        
-        this.Password=password;
+        this.Password = password;
     }
 
+    public void create(String DocumentName) {
+    }
+
+    ;
+    
     public String getDocumentName() {
         return DocumentName;
     }
@@ -29,8 +31,4 @@ abstract class File {
         this.Password = Password;
     }
 
-    
-
-    
 }
-
