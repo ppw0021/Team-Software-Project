@@ -2,13 +2,13 @@
 package com.mycompany.groupproject;
 
 
-public class FileDirectory {
+abstract class File {
    
     private String DocumentName;
     private String Author;
     private String Password;
 
-    public FileDirectory(String documentName, String author,String password) {
+    public File(String documentName, String author,String password) {
         this.DocumentName = documentName;
         this.Author = author;
         this.Password=password;
