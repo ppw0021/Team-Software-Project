@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class GroupProject {
 private static Scanner scanner;
+//Declan was here
     public static void main(String[] args) {
         System.out.println("Welcome to the Knowledge Depository");
         boolean status=true;
