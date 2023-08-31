@@ -8,7 +8,7 @@ package com.mycompany.groupproject;
  *
  * @author Declan Ross
  */
-public class EditHistory extends File{
+/**public class EditHistory extends File{
     
     
-}
+}*/

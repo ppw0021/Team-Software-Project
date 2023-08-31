@@ -5,12 +5,11 @@ package com.mycompany.groupproject;
 abstract class File {
    
     private String DocumentName;
-    private String Author;
     private String Password;
 
-    public File(String documentName, String author,String password) {
+    public File(String documentName,String password) {
         this.DocumentName = documentName;
-        this.Author = author;
+        
         this.Password=password;
     }
 
@@ -20,14 +19,6 @@ abstract class File {
 
     public void setDocumentName(String DocumentName) {
         this.DocumentName = DocumentName;
-    }
-
-    public String getAuthor() {
-        return Author;
-    }
-
-    public void setAuthor(String Author) {
-        this.Author = Author;
     }
 
     public String getPassword() {

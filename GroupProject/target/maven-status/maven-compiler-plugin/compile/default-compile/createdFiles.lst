@@ -1,3 +1,5 @@
-exercises\ComputeProductMenu.class
 com\mycompany\groupproject\GroupProject.class
+exercises\ComputeProductMenu.class
+com\mycompany\groupproject\File.class
+com\mycompany\groupproject\CreateFile.class
 test\ComputeProduct.class

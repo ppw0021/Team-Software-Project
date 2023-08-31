@@ -4,12 +4,15 @@ import java.io.File;  // Import the File class
 import java.io.IOException;  // Import the IOException class to handle errors
 
 public class CreateFile {
+   public String DocumentName;
     
-
-
-  public static void main(String[] args) {
+   public String Password;
+    
+        
+   
+  public static void create(String DocumentName){
     try {
-      File myObj = new File("filename.txt");
+      File myObj = new File(DocumentName);
       if (myObj.createNewFile()) {
         System.out.println("File created: " + myObj.getName());
       } else {
