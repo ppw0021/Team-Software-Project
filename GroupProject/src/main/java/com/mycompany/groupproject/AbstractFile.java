@@ -3,11 +3,13 @@ package com.mycompany.groupproject;
 abstract class AbstractFile {
 
     private String DocumentName;
-    private String Password;
+    private String DocumentEditsName;
+    //private String Password;
 
-    public AbstractFile(String documentName, String password) {
+    public AbstractFile(String documentName, String documentEditsName) {
         this.DocumentName = documentName;
-        this.Password = password;
+        this.DocumentEditsName = documentEditsName;
+        //this.Password = password;
     }
 
     public void create(String DocumentName) {
@@ -21,8 +23,9 @@ abstract class AbstractFile {
 
     public void setDocumentName(String DocumentName) {
         this.DocumentName = DocumentName;
+        this.DocumentEditsName = ("EDITS_" + DocumentName);
     }
-
+/*
     public String getPassword() {
         return Password;
     }
@@ -30,5 +33,5 @@ abstract class AbstractFile {
     public void setPassword(String Password) {
         this.Password = Password;
     }
-
+*/
 }

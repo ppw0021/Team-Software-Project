@@ -5,20 +5,20 @@ import java.io.IOException;  // Import the IOException class to handle errors
 
 public class CreateFile extends AbstractFile {
 
-    public String DocumentName;
-
-    public String Password;
-
+    //public String DocumentName;
+    //public String Password;
     public CreateFile() {
-        super("default", "default");
+        super("default.txt", "EDITS_default.txt");
     }
 
     @Override
     public void create(String DocumentName) {
         try {
-            File myObj = new File(DocumentName + ".txt");
-            if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
+            File primaryFile = new File(DocumentName + ".txt");
+            File editsFile = new File("EDITS_" + DocumentName + ".txt");
+            if (primaryFile.createNewFile() && editsFile.createNewFile()) {
+                System.out.println("File created: " + primaryFile.getName());
+                this.setDocumentName(DocumentName);
             } else {
                 System.out.println("File already exists.");
             }
