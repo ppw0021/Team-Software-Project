@@ -8,7 +8,7 @@ package com.mycompany.groupproject;
  *
  * @author Declan Ross
  
-public class WriteFile  extends File{
+public class WriteFile extends File{
     
 }
 */

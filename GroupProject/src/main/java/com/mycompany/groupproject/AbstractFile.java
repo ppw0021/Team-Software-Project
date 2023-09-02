@@ -1,29 +1,40 @@
 package com.mycompany.groupproject;
 
-abstract class AbstractFile {
+import java.io.File;
 
-    private String DocumentName;
-    private String DocumentEditsName;
-    
+public abstract class AbstractFile {
 
-    public AbstractFile(String documentName, String documentEditsName) {
-        this.DocumentName = documentName;
-        this.DocumentEditsName = documentEditsName;
-        
+    private File thisFile;
+
+    public AbstractFile() {
+
     }
 
+    public AbstractFile(File thisFile) {
+        this.thisFile = thisFile;
+    }
+
+    public void setThisFile(File file) {
+        this.thisFile = file;
+    }
+
+    public File getThisFile() {
+        return this.thisFile;
+    }
+
+    
     public void create(String DocumentName) {
     }
 
     ;
     
-    public String getDocumentName() {
-        return DocumentName;
+    void viewOrSetFile(String directoryPath, int fileNumber, int status) {
     }
 
-    public void setDocumentName(String DocumentName) {
-        this.DocumentName = DocumentName;
-        this.DocumentEditsName = ("EDITS_" + DocumentName);
+    ;
+    
+    public boolean findAndReplace(String find, String replace) {
+        return false;
     }
 
 }

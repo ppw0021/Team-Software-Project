@@ -1,20 +1,39 @@
 package com.mycompany.groupproject;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class DisplayContents {
+public class DisplayContents extends AbstractFile {
 
-    public void viewFile(String directoryPath, int fileNumber,int status) {
+    public DisplayContents() {
+        super();
+    }
+
+    @Override
+    public void viewOrSetFile(String directoryPath, int fileNumber, int setIfOne) {
         File directory = new File(directoryPath);
 
         if (directory.exists() && directory.isDirectory()) {
-            File[] files = directory.listFiles();
-            //File[] files = directory.listFiles((dir, name) -> !name.startsWith("EDITS_") && !name.equals("pom.xml"));
+            //File[] files = directory.listFiles();
+            File[] files = directory.listFiles((dir, name) -> !name.startsWith("EDITS_") && !name.equals("pom.xml") && name.endsWith(".txt"));
+
+            if (setIfOne != 1) {
+                //SetThisFile
+                setThisFile(files[fileNumber - 1]);
+                String fileContent;
+                try {
+                    fileContent = new String(Files.readAllBytes(Paths.get(getThisFile().getAbsolutePath())));
+                    System.out.println("\nFile content of " + getThisFile().getName() + ":\n" + fileContent + "\n\n");
+                } catch (IOException ex) {
+                    System.out.println("Error");;
+                }
+                return;
+            }
 
             if (files != null) {
                 Arrays.sort(files); // Sort files alphabetically
@@ -23,13 +42,12 @@ public class DisplayContents {
                     if (selectedFile.isFile()) {
                         try {
                             String fileContent = new String(Files.readAllBytes(Paths.get(selectedFile.getAbsolutePath())));
-                            if (status==1){
-                                System.out.println("You have selected '" + selectedFile.getName() + "' Please select an option.");
-                            }
-                            else{
-                            System.out.println("File content of " + selectedFile.getName() + ":\n" + fileContent+"\n\n");
-                            }
-                            
+                            //if (status == 1) {
+                            System.out.println("\nYou have selected '" + selectedFile.getName() + "' Please select an option.");
+                            //} else {
+                            //    System.out.println("File content of " + selectedFile.getName() + ":\n" + fileContent + "\n\n");
+                            //}
+
                         } catch (IOException e) {
                             System.out.println("An error occurred while reading the file.");
                         }

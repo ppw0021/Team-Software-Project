@@ -7,10 +7,8 @@ import java.util.Scanner;
 
 public class CreateFile extends AbstractFile {
 
-    //public String DocumentName;
-    //public String Password;
     public CreateFile() {
-        super("default.txt", "EDITS_default.txt");
+        super();
     }
 
     @Override
@@ -20,7 +18,6 @@ public class CreateFile extends AbstractFile {
             File editsFile = new File("EDITS_" + DocumentName + ".txt");
             if (primaryFile.createNewFile() && editsFile.createNewFile()) {
                 System.out.println("File created: " + primaryFile.getName());
-                this.setDocumentName(DocumentName);
                 FileWriter primaryWriter = new FileWriter(primaryFile, true);
                 System.out.println("Please add your information");
                 Scanner tx=new Scanner(System.in);

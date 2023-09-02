@@ -1,6 +1,7 @@
 package com.mycompany.groupproject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ListFiles {
@@ -9,11 +10,10 @@ public class ListFiles {
         File directory = new File(directoryPath);
 
         if (directory.exists() && directory.isDirectory()) {
-            File[] files = directory.listFiles();
-
+            File[] files = directory.listFiles((dir, name) -> !name.startsWith("EDITS_") && !name.equals("pom.xml") && name.endsWith(".txt"));
             if (files != null && files.length > 0) {
                 Arrays.sort(files); // Sort files alphabetically
-                System.out.println("Files in directory " + directoryPath + ":");
+                System.out.println("\nFiles in directory " + directoryPath + ":");
 
                 for (int i = 0; i < files.length; i++) {
                     if (files[i].isFile()) {

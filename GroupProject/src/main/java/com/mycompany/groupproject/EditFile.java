@@ -4,16 +4,24 @@
  */
 package com.mycompany.groupproject;
 
+import java.io.File;
+
 /**
  *
  * @author dec50
  */
 public class EditFile extends AbstractFile{
     
-    public EditFile(String fileName)
+    public EditFile()
     {
-        super(fileName, ("EDITS_" + fileName));
+        super();
     }
     
-    
+    @Override
+    public boolean findAndReplace(String find, String replace)
+    {
+        
+        
+        return false;
+    }
 }
