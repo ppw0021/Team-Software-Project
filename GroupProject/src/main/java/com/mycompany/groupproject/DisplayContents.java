@@ -19,22 +19,35 @@ public class DisplayContents extends AbstractFile {
     }
 
     @Override
-    public void viewFile(String directoryPath, int fileNumber, int setIfOne) {
+    public void viewFile(String directoryPath, int fileNumber, boolean setIfTrue, boolean viewEdits) {
         File directory = new File(directoryPath);
 
         if (directory.exists() && directory.isDirectory()) {
-            //File[] files = directory.listFiles();
             File[] files = directory.listFiles((dir, name) -> !name.startsWith("EDITS_") && !name.equals("pom.xml") && name.endsWith(".txt"));
 
-            if (setIfOne != 1) {
+            if (viewEdits){
+                setThisFile(files[fileNumber - 1]);
+                String fileContent = "";
+                try {
+                    fileContent = new String(Files.readAllBytes(Paths.get(getThisFileEdits().getAbsolutePath())));
+                } catch (IOException ex) {
+                    System.out.println("Error Opening edits file, please check that EDITS_ file exists.");
+                    return;
+                }
+                System.out.println("\nEdit History of " + getThisFile().getName() + ":\n" + fileContent + "\n\n");
+                return;
+                
+            }
+            
+            if (!setIfTrue) {
                 //SetThisFile
                 setThisFile(files[fileNumber - 1]);
-                String fileContent;
+                String fileContent = "";
                 try {
                     fileContent = new String(Files.readAllBytes(Paths.get(getThisFile().getAbsolutePath())));
                     System.out.println("\nFile content of " + getThisFile().getName() + ":\n" + fileContent + "\n\n");
                 } catch (IOException ex) {
-                    System.out.println("Error");;
+                    System.out.println("Error Opening file, please check that file exists.");;
                 }
                 return;
             }
@@ -46,11 +59,7 @@ public class DisplayContents extends AbstractFile {
                     if (selectedFile.isFile()) {
                         try {
                             String fileContent = new String(Files.readAllBytes(Paths.get(selectedFile.getAbsolutePath())));
-                            //if (status == 1) {
                             System.out.println("\nYou have selected '" + selectedFile.getName() + "' Please select an option.");
-                            //} else {
-                            //    System.out.println("File content of " + selectedFile.getName() + ":\n" + fileContent + "\n\n");
-                            //}
 
                         } catch (IOException e) {
                             System.out.println("An error occurred while reading the file.");
@@ -62,10 +71,12 @@ public class DisplayContents extends AbstractFile {
                     System.out.println("Invalid file number.");
                 }
             } else {
-                System.out.println("No files in the directory.");
+                System.out.println("No files in the directory. Please create a new information page.");
+                return;
             }
         } else {
             System.out.println("Invalid directory path.");
         }
+        return;
     }
 }

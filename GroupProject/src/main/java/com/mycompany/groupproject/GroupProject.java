@@ -28,7 +28,7 @@ public class GroupProject {
         return abstractFile;
     }
 
-    public void setAbstractFile(AbstractFile abstractFile, GroupProject application) {
+    public void setAbstractFile(AbstractFile abstractFile) {
         this.abstractFile = abstractFile;
     }
 
@@ -42,16 +42,16 @@ public class GroupProject {
 
     }
 
-    public static void viewFile() {
+    public static boolean viewFile() {
         //List Files
         ListFiles listFilesApplication = new ListFiles();
-        listFilesApplication.listFiles(directoryPath);
+        return listFilesApplication.listFiles(directoryPath);
     }
 
-    public static void readFile(int status, int fileNumber, GroupProject application) {
+    public static void readFile(boolean status, boolean edits, int fileNumber, GroupProject application) {
         //Set mode DisplayContents
-        application.setAbstractFile(new DisplayContents(), application);
-        application.getAbstractFile().viewFile(directoryPath, fileNumber, status); // Call the viewFile method from FileViewer class
+        application.setAbstractFile(new DisplayContents());
+        application.getAbstractFile().viewFile(directoryPath, fileNumber, status, edits); // Call the viewFile method from FileViewer class
     }
 
     public static void editFile(int fileNumber, String adminPassword, GroupProject application) {
@@ -61,13 +61,13 @@ public class GroupProject {
             System.out.println("Correct password.");
 
             //Change mode to DisplayContents
-            application.setAbstractFile(new DisplayContents(), application);
-            application.getAbstractFile().viewFile(directoryPath, fileNumber, 0);
+            application.setAbstractFile(new DisplayContents());
+            application.getAbstractFile().viewFile(directoryPath, fileNumber, false, false);
 
             File passThroughFile = application.getAbstractFile().getThisFile();
 
             //Change mode to EditFile
-            application.setAbstractFile(new EditFile(passThroughFile), application);
+            application.setAbstractFile(new EditFile(passThroughFile));
             System.out.println("Please type what you would like to remove: (leave blank to append at end of document, or type just x to cancel)");
             String find = scanner.nextLine();
             if (find.toLowerCase().equals("x")) {
@@ -75,7 +75,7 @@ public class GroupProject {
             } else {
                 System.out.println("Please type what you would like to replace it with: (Leave blank to only remove selected text, or type just x to cancel)");
                 String replace = scanner.nextLine();
-                switch(application.getAbstractFile().findAndReplace(find, replace)){
+                switch (application.getAbstractFile().findAndReplace(find, replace)) {
                     case 0:
                         System.out.println("Operation aborted. No changes made.");
                         break;
@@ -97,6 +97,43 @@ public class GroupProject {
         }
     }
 
+    public static void createFile(String adminPassword, GroupProject application) {
+        System.out.println("\nPlease Enter the Administrator Password:");
+        String passwordInput = scanner.nextLine();
+        if (passwordInput.equals(adminPassword)) {
+            application.createFile();
+        } else {
+            System.out.println("Incorrect password.");
+        }
+    }
+
+    public static void deleteFile(int fileNumber, String adminPassword, GroupProject application) {
+        System.out.println("\nPlease Enter the Administrator Password:");
+        String passwordInput = scanner.nextLine();
+        if (passwordInput.equals(adminPassword)) {
+            System.out.println("Correct password.");
+
+            //Change mode to DisplayContents
+            application.setAbstractFile(new DisplayContents());
+            application.getAbstractFile().viewFile(directoryPath, fileNumber, false, false);
+
+            File passThroughFile = application.getAbstractFile().getThisFile();
+
+            //Change mode to EditFile
+            application.setAbstractFile(new EditFile(passThroughFile));
+
+            System.out.println("Are you sure you want to delete this file? (Press y for yes, press any other key for no.)");
+            String find = scanner.nextLine();
+            if (find.toLowerCase().equals("y")) {
+                application.getAbstractFile().deleteFileAndEdits();
+            } else {
+                System.out.println("No changes made.");
+            }
+        } else {
+            System.out.println("Incorrect password.");
+        }
+    }
+
     public static void main(String[] args) {
         GroupProject application = new GroupProject();
 
@@ -104,12 +141,12 @@ public class GroupProject {
         boolean status = true;
         while (status) {
 
-            System.out.println("\nPlease select from the following options");
-            System.out.println("Press 1 to view files");
-            System.out.println("Press 2 to create a text file.");
-            System.out.println("Press 3 to delete a text file. ");
-            System.out.println("Press 4 to change admin password.");
-            System.out.println("Press x to exit");
+            System.out.println("\nPlease select from the following options:");
+            System.out.println("Press 1 to view information pages.");
+            System.out.println("Press 2 to create a new information page.");
+            //System.out.println("Press 3 to delete a text file. ");
+            System.out.println("Press 3 to change admin password.");
+            System.out.println("Press x to exit.");
 
             try {
 
@@ -118,62 +155,68 @@ public class GroupProject {
 
                 switch (choice) {
                     case "1" -> {
-                        viewFile();
-                        System.out.print("Enter the file number to view: ");
-                        Scanner input = new Scanner(System.in);
-                        int fileNumber = input.nextInt();
-                        input.nextLine(); // Consume the newline character
+                        boolean doFilesExist = viewFile();
+                        if (doFilesExist) {
+                            System.out.print("Enter the file number to view: ");
+                            Scanner input = new Scanner(System.in);
+                            int fileNumber = input.nextInt();
+                            input.nextLine(); // Consume the newline character
 
-                        readFile(1, fileNumber, application);
-                        System.out.println("Press 1 to view file");
-                        System.out.println("Press 2 to view summary");
-                        System.out.println("Press 3 to edit file");
-                        System.out.println("Press b to go back.");
-                        System.out.println("Press X to go exit");
-                        try {
+                            readFile(true, false, fileNumber, application);
+                            System.out.println("Press 1 to view information.");
+                            //System.out.println("Press 2 to view summary");
+                            System.out.println("Press 2 to edit information.");
+                            System.out.println("Press 3 to view edit history.");
+                            System.out.println("Press 4 to delete file.");
+                            System.out.println("Press b to go back.");
+                            System.out.println("Press X to go exit.");
+                            try {
 
-                            String state = scanner.nextLine();
-                            state = state.toLowerCase();
+                                String state = scanner.nextLine();
+                                state = state.toLowerCase();
 
-                            switch (state) {
-                                case "1" -> {
-                                    readFile(0, fileNumber, application);
+                                switch (state) {
+                                    case "1" -> {
+                                        //View file
+                                        readFile(false, false, fileNumber, application);
+                                    }
+                                    case "2" -> {
+                                        //Edit file
+                                        editFile(fileNumber, application.adminPassword, application);
+                                    }
+                                    case "3" -> {
+                                        //View edit history
+                                        readFile(false, true, fileNumber, application);
+                                    }
+                                    case "4" -> {
+                                        deleteFile(fileNumber, application.adminPassword, application);
+                                    }
+                                    case "b" -> {
+                                        state = "1";
+                                    }
+                                    case "x" ->
+                                        status = false;
 
+                                    default ->
+                                        System.out.println("Invalid menu input.");
                                 }
+                            } catch (Exception e) {
+                                System.out.println(e);
+                                System.out.println("You must input integer values.");
 
-                                case "2" -> {
-                                    //view summarry 
-                                }
-
-                                case "3" -> {
-                                    editFile(fileNumber, application.adminPassword, application);
-                                }
-                                case "b" -> {
-                                    state = "1";
-                                }
-                                case "x" ->
-                                    status = false;
-
-                                default ->
-                                    System.out.println("Invalid menu input");
+                                scanner.next();//remove bad input from the scanner.
                             }
-                        } catch (Exception e) {
-                            System.out.println(e);
-                            System.out.println("You must input integer values");
-
-                            scanner.next();//remove bad input from the scanner.
                         }
                     }
-
                     case "2" -> {
 
-                        application.createFile();
+                        createFile(application.adminPassword, application);
 
                     }
 
+                    //case "3" -> {
+                    //}
                     case "3" -> {
-                    }
-                    case "4" -> {
                         System.out.println("Please enter old password:");
                         try {
                             String oldPassword = scanner.nextLine();
@@ -195,10 +238,10 @@ public class GroupProject {
                         status = false;
 
                     default ->
-                        System.out.println("Invalid menu input");
+                        System.out.println("Invalid menu input.");
                 }
             } catch (Exception e) {
-                System.out.println("You must input integer values");
+                System.out.println("You must input integer values.");
 
                 scanner.next();//remove bad input from the scanner.
             }

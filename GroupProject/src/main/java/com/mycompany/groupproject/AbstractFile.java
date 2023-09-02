@@ -28,19 +28,14 @@ public abstract class AbstractFile {
         String editsFilePath = (originalFilePath.replace(fileName, "") + "EDITS_" + fileName);
         return new File(editsFilePath);
     }
-    
-    public void create(String DocumentName) {
-    }
 
-    ;
+    public void create(String DocumentName) {}
     
-    void viewFile(String directoryPath, int fileNumber, int status) {
-    }
-
-    ;
+    void viewFile(String directoryPath, int fileNumber, boolean set, boolean viewEdits) {}
     
     public int findAndReplace(String find, String replace) {
         return 3;
     }
 
+    public void deleteFileAndEdits() {}
 }

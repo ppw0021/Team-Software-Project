@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class ListFiles {
 
-    public void listFiles(String directoryPath) {
+    public boolean listFiles(String directoryPath) {
         File directory = new File(directoryPath);
 
         if (directory.exists() && directory.isDirectory()) {
@@ -20,11 +20,14 @@ public class ListFiles {
                         System.out.println((i + 1) + ". " + files[i].getName());
                     }
                 }
+                return true;
             } else {
-                System.out.println("No files in the directory.");
+                System.out.println("No files in the directory. Please create a new knowledge file.");
+                return false;
             }
         } else {
             System.out.println("Invalid directory path.");
         }
+        return false;
     }
 }

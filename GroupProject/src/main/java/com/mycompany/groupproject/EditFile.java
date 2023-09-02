@@ -32,7 +32,7 @@ public class EditFile extends AbstractFile {
     public int findAndReplace(String find, String replace) {
 
         if (replace.toLowerCase().equals("x")) {
-            //Useer cancelled
+            //User cancelled
             return 0;
         }
 
@@ -56,7 +56,7 @@ public class EditFile extends AbstractFile {
 
         String editsHeader = ("___________________________________________\nEdits made by Admin at: " + formattedDateTime + "\n");
         String edits = "";
-        String editsFootNote = ("\nEnd of edits.\n*******************************************\n");
+        String editsFootNote = ("\nEnd of edit.\n*******************************************\n");
 
         //Make no changes mode
         if (replace.equals("") && find.equals("")) {
@@ -103,6 +103,24 @@ public class EditFile extends AbstractFile {
                 return 3;
             }
             return 2;
+        }
+    }
+    
+    @Override
+    public void deleteFileAndEdits()
+    {
+        File fileToDelete = this.getThisFile();
+        File fileEditsToDelete = this.getThisFileEdits();
+        
+        if (fileToDelete.exists() && fileEditsToDelete.exists()) {
+            // Attempt to delete the file
+            if (fileToDelete.delete() && fileEditsToDelete.delete()) {
+                System.out.println("File deleted successfully.");
+            } else {
+                System.out.println("Delete failed.");
+            }
+        } else {
+            System.out.println("File doesn't exist.");
         }
     }
 }
