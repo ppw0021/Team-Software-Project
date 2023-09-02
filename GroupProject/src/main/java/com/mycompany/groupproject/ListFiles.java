@@ -1,12 +1,12 @@
-
 package com.mycompany.groupproject;
+
 import java.io.File;
 import java.util.Arrays;
 
 public class ListFiles {
-    
-    public static void listFiles(String directoryPath) {
-          File directory = new File(directoryPath);
+
+    public void listFiles(String directoryPath) {
+        File directory = new File(directoryPath);
 
         if (directory.exists() && directory.isDirectory()) {
             File[] files = directory.listFiles();
@@ -26,4 +26,5 @@ public class ListFiles {
         } else {
             System.out.println("Invalid directory path.");
         }
-    }}
+    }
+}

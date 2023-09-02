@@ -9,11 +9,12 @@ import java.util.Arrays;
 
 public class DisplayContents {
 
-    public static void viewFile(String directoryPath, int fileNumber,int status) {
+    public void viewFile(String directoryPath, int fileNumber,int status) {
         File directory = new File(directoryPath);
 
         if (directory.exists() && directory.isDirectory()) {
             File[] files = directory.listFiles();
+            //File[] files = directory.listFiles((dir, name) -> !name.startsWith("EDITS_") && !name.equals("pom.xml"));
 
             if (files != null) {
                 Arrays.sort(files); // Sort files alphabetically
