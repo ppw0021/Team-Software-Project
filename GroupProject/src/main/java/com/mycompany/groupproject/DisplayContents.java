@@ -13,9 +13,13 @@ public class DisplayContents extends AbstractFile {
     public DisplayContents() {
         super();
     }
+    
+    public DisplayContents(File file) {
+        super(file);
+    }
 
     @Override
-    public void viewOrSetFile(String directoryPath, int fileNumber, int setIfOne) {
+    public void viewFile(String directoryPath, int fileNumber, int setIfOne) {
         File directory = new File(directoryPath);
 
         if (directory.exists() && directory.isDirectory()) {

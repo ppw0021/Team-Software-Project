@@ -1,6 +1,7 @@
 package com.mycompany.groupproject;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.InputMismatchException;
@@ -13,7 +14,7 @@ public class GroupProject {
     private String adminPassword;
     static Scanner scanner = new Scanner(System.in);
     private List<AbstractFile> files;
-    
+
     private AbstractFile abstractFile;
 
     private static String directoryPath = System.getProperty("user.dir");
@@ -23,16 +24,14 @@ public class GroupProject {
         files = new ArrayList<>();
     }
 
-    public AbstractFile getAbstractFile()
-    {
+    public AbstractFile getAbstractFile() {
         return abstractFile;
     }
-    
-    public void setAbstractFile(AbstractFile abstractFile)
-    {
+
+    public void setAbstractFile(AbstractFile abstractFile, GroupProject application) {
         this.abstractFile = abstractFile;
     }
-    
+
     public void createFile() {
         scanner = new Scanner(System.in);
         System.out.print("Enter the name of the file: ");
@@ -51,27 +50,48 @@ public class GroupProject {
 
     public static void readFile(int status, int fileNumber, GroupProject application) {
         //Set mode DisplayContents
-        application.setAbstractFile(new DisplayContents());
-        application.getAbstractFile().viewOrSetFile(directoryPath, fileNumber, status); // Call the viewFile method from FileViewer class
+        application.setAbstractFile(new DisplayContents(), application);
+        application.getAbstractFile().viewFile(directoryPath, fileNumber, status); // Call the viewFile method from FileViewer class
     }
 
     public static void editFile(int fileNumber, String adminPassword, GroupProject application) {
         System.out.println("\nPlease Enter the Administrator Password:");
         String passwordInput = scanner.nextLine();
         if (passwordInput.equals(adminPassword)) {
-            System.out.println("Correct password.\n Here are the file contents:");
-            
+            System.out.println("Correct password.");
+
             //Change mode to DisplayContents
-            application.setAbstractFile(new DisplayContents());
-            application.getAbstractFile().viewOrSetFile(directoryPath, fileNumber, 0);
-            
+            application.setAbstractFile(new DisplayContents(), application);
+            application.getAbstractFile().viewFile(directoryPath, fileNumber, 0);
+
+            File passThroughFile = application.getAbstractFile().getThisFile();
+
             //Change mode to EditFile
-            application.setAbstractFile(new EditFile());
-            System.out.println("Please type what you would like to remove: (leave blank to append at end of document)");
+            application.setAbstractFile(new EditFile(passThroughFile), application);
+            System.out.println("Please type what you would like to remove: (leave blank to append at end of document, or type just x to cancel)");
             String find = scanner.nextLine();
-            System.out.println("Please type what you would like to replace it with: (Leave blank to cancel)");
-            String replace = scanner.nextLine();
-            application.getAbstractFile().findAndReplace(find, replace);
+            if (find.toLowerCase().equals("x")) {
+                System.out.println("No changes made.");
+            } else {
+                System.out.println("Please type what you would like to replace it with: (Leave blank to only remove selected text, or type just x to cancel)");
+                String replace = scanner.nextLine();
+                switch(application.getAbstractFile().findAndReplace(find, replace)){
+                    case 0:
+                        System.out.println("Operation aborted. No changes made.");
+                        break;
+                    case 1:
+                        System.out.println("Data successfully appended.");
+                        break;
+                    case 2:
+                        System.out.println("Find and Replace completed successfully.");
+                        break;
+                    case 3:
+                        System.out.println("No changes made.");
+                        break;
+                    default:
+                        break;
+                }
+            }
         } else {
             System.out.println("Incorrect password.");
         }
@@ -138,6 +158,7 @@ public class GroupProject {
                                     System.out.println("Invalid menu input");
                             }
                         } catch (Exception e) {
+                            System.out.println(e);
                             System.out.println("You must input integer values");
 
                             scanner.next();//remove bad input from the scanner.

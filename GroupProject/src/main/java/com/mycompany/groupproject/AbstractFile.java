@@ -22,19 +22,25 @@ public abstract class AbstractFile {
         return this.thisFile;
     }
 
+    public File getThisFileEdits() {
+        String fileName = this.thisFile.getName();
+        String originalFilePath = this.thisFile.getPath();
+        String editsFilePath = (originalFilePath.replace(fileName, "") + "EDITS_" + fileName);
+        return new File(editsFilePath);
+    }
     
     public void create(String DocumentName) {
     }
 
     ;
     
-    void viewOrSetFile(String directoryPath, int fileNumber, int status) {
+    void viewFile(String directoryPath, int fileNumber, int status) {
     }
 
     ;
     
-    public boolean findAndReplace(String find, String replace) {
-        return false;
+    public int findAndReplace(String find, String replace) {
+        return 3;
     }
 
 }
