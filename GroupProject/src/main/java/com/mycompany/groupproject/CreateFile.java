@@ -1,7 +1,9 @@
 package com.mycompany.groupproject;
 
 import java.io.File;  // Import the File class
+import java.io.FileWriter;
 import java.io.IOException;  // Import the IOException class to handle errors
+import java.util.Scanner;
 
 public class CreateFile extends AbstractFile {
 
@@ -19,6 +21,13 @@ public class CreateFile extends AbstractFile {
             if (primaryFile.createNewFile() && editsFile.createNewFile()) {
                 System.out.println("File created: " + primaryFile.getName());
                 this.setDocumentName(DocumentName);
+                FileWriter primaryWriter = new FileWriter(primaryFile, true);
+                System.out.println("Please add your information");
+                Scanner tx=new Scanner(System.in);
+                String text=tx.nextLine();
+                primaryWriter.write(text);
+                primaryWriter.close();
+                System.out.println("Text added to file: " + primaryFile.getName());
             } else {
                 System.out.println("File already exists.");
             }

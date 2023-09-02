@@ -27,8 +27,25 @@ public class GroupProject {
         
         fileCreator.create(fileName);
 
-        //CreateFile.create(fileName); // Call the create method from CreateFile class
+        
     }
+    public static void viewFile() {
+        String directoryPath="C:\\Users\\64220\\Documents\\Project\\softwareproject1\\GroupProject";
+        ListFiles.listFiles(directoryPath);
+           }
+    public static void readFile(int status, int fileNumber){
+        String directoryPath="C:\\Users\\64220\\Documents\\Project\\softwareproject1\\GroupProject";
+
+       
+        
+        
+
+        DisplayContents.viewFile(directoryPath, fileNumber,status); // Call the viewFile method from FileViewer class
+
+    }
+    
+
+    
 
     public static void main(String[] args) {
         GroupProject application = new GroupProject();
@@ -51,13 +68,54 @@ public class GroupProject {
 
                 switch (choice) {
                     case "1" -> {
+                            viewFile();
+                            System.out.print("Enter the file number to view: ");
+                             Scanner input = new Scanner(System.in);
+                            int fileNumber = input.nextInt();
+                             input.nextLine(); // Consume the newline character
+        
+                            readFile(1,fileNumber);
+                            System.out.println("Press 1 to view file");
+                            System.out.println("Press 2 to view summary");
+                            System.out.println("Press 3 to edit file");
+                            System.out.println("Press b to go back.");
+                            System.out.println("Press X to go exit");
+                            try {
+
+                               String state = scanner.nextLine();
+                                state = state.toLowerCase();
+
+                                switch (state) {
+                                    case "1" -> {
+                                        readFile(0,fileNumber);
+                                        
+                                    }
+
+                                    case "2" -> {
+                                        //view summarry 
+                                    }
+
+                                    case "3" -> {
+                                        //edit files 
+                                    }
+                                    case "b"->{
+                                        state="1";
+                                    }
+                                    case "x" -> 
+                                        status=false;
+                                    
+                                    default->
+                                        System.out.println("Invalid menu input");
+                                }
+                            } catch (Exception e) {
+                                System.out.println("You must input integer values");
+
+                                scanner.next();//remove bad input from the scanner.
+                            }
                     }
 
                     case "2" -> {
-                        /*System.out.println("Please enter a name for your document");
-                        String title = scanner.nextLine();
-                        System.out.println("Please enter an admin password for editing later");
-                        String password = scanner.nextLine();*/
+                     
                         application.createFile();
 
                     }

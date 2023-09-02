@@ -1,5 +1,6 @@
+com\mycompany\groupproject\DisplayContents.class
 com\mycompany\groupproject\GroupProject.class
-exercises\ComputeProductMenu.class
-com\mycompany\groupproject\File.class
 com\mycompany\groupproject\CreateFile.class
+exercises\ComputeProductMenu.class
+com\mycompany\groupproject\ListFiles.class
 test\ComputeProduct.class
