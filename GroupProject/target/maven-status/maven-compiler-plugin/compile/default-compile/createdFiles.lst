@@ -1,8 +1,6 @@
+com\mycompany\groupproject\AbstractFile.class
 com\mycompany\groupproject\EditFile.class
 com\mycompany\groupproject\DisplayContents.class
 com\mycompany\groupproject\GroupProject.class
 com\mycompany\groupproject\CreateFile.class
-com\mycompany\groupproject\AbstractFile.class
-exercises\ComputeProductMenu.class
 com\mycompany\groupproject\ListFiles.class
-test\ComputeProduct.class
