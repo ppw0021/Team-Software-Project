@@ -1,10 +1,7 @@
 package com.mycompany.groupproject;
 
-import java.io.BufferedWriter;
+
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +16,7 @@ public class GroupProject {
 
     private static String directoryPath = System.getProperty("user.dir");
 
-    public GroupProject() {
+    public GroupProject() {//Constructor that sets default values
         adminPassword = "Admin";
         files = new ArrayList<>();
     }
@@ -32,7 +29,7 @@ public class GroupProject {
         this.abstractFile = abstractFile;
     }
 
-    public void createFile() {
+    public void createFile() {//method that creates files and calls Createfile class
         scanner = new Scanner(System.in);
         System.out.print("Enter the name of the file: ");
         String fileName = scanner.nextLine();
@@ -134,13 +131,13 @@ public class GroupProject {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {//Start of the main code
         GroupProject application = new GroupProject();
 
         System.out.println("Welcome to the Knowledge Depository");
         boolean status = true;
-        while (status) {
-
+        while (status) {//Infinte loop starts
+            //Displays menu
             System.out.println("\nPlease select from the following options:");
             System.out.println("Press 1 to view information pages.");
             System.out.println("Press 2 to create a new information page.");
@@ -154,10 +151,10 @@ public class GroupProject {
                 choice = choice.toLowerCase();
 
                 switch (choice) {
-                    case "1" -> {
+                    case "1" -> {//Displays information 
                         boolean doFilesExist = viewFile();
-                        if (doFilesExist) {
-                            System.out.print("Enter the file number to view: ");
+                        if (doFilesExist) {//checkks if files exists
+                            System.out.print("Enter the file number to view: ");//Asks for user input
                             Scanner input = new Scanner(System.in);
                             int fileNumber = input.nextInt();
                             input.nextLine(); // Consume the newline character
@@ -214,9 +211,8 @@ public class GroupProject {
 
                     }
 
-                    //case "3" -> {
-                    //}
-                    case "3" -> {
+                   
+                    case "3" -> {//Changes password
                         System.out.println("Please enter old password:");
                         try {
                             String oldPassword = scanner.nextLine();

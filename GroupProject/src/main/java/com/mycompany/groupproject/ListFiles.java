@@ -1,21 +1,21 @@
 package com.mycompany.groupproject;
 
 import java.io.File;
-import java.util.ArrayList;
+
 import java.util.Arrays;
 
 public class ListFiles {
 
     public boolean listFiles(String directoryPath) {
         File directory = new File(directoryPath);
-
+        //CHecks if files are in directory
         if (directory.exists() && directory.isDirectory()) {
             File[] files = directory.listFiles((dir, name) -> !name.startsWith("EDITS_") && !name.equals("pom.xml") && name.endsWith(".txt"));
             if (files != null && files.length > 0) {
                 Arrays.sort(files); // Sort files alphabetically
-                System.out.println("\nFiles in directory " + directoryPath + ":");
+                System.out.println("\nFiles in directory " + directoryPath + ":");//Displaus all files
 
-                for (int i = 0; i < files.length; i++) {
+                for (int i = 0; i < files.length; i++) {//Loops fo all files
                     if (files[i].isFile()) {
                         System.out.println((i + 1) + ". " + files[i].getName());
                     }

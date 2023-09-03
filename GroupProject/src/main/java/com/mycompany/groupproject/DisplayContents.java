@@ -5,8 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class DisplayContents extends AbstractFile {
 
@@ -22,10 +21,10 @@ public class DisplayContents extends AbstractFile {
     public void viewFile(String directoryPath, int fileNumber, boolean setIfTrue, boolean viewEdits) {
         File directory = new File(directoryPath);
 
-        if (directory.exists() && directory.isDirectory()) {
+        if (directory.exists() && directory.isDirectory()) {//Checks for the file
             File[] files = directory.listFiles((dir, name) -> !name.startsWith("EDITS_") && !name.equals("pom.xml") && name.endsWith(".txt"));
 
-            if (viewEdits){
+            if (viewEdits){//If view edits selected runs this command 
                 setThisFile(files[fileNumber - 1]);
                 String fileContent = "";
                 try {
@@ -39,7 +38,7 @@ public class DisplayContents extends AbstractFile {
                 
             }
             
-            if (!setIfTrue) {
+            if (!setIfTrue) {//Opens file and displays contents
                 //SetThisFile
                 setThisFile(files[fileNumber - 1]);
                 String fileContent = "";
@@ -72,11 +71,11 @@ public class DisplayContents extends AbstractFile {
                 }
             } else {
                 System.out.println("No files in the directory. Please create a new information page.");
-                return;
+               
             }
         } else {
             System.out.println("Invalid directory path.");
         }
-        return;
+        
     }
 }
